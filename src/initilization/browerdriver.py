@@ -9,4 +9,5 @@ def build_up_driver():
     driver = webdriver.Chrome(options=chrome_options)
     driver.implicitly_wait(20)
     driver.get("https://www.douban.com/")
+    driver.maximize_window()
     return driver
