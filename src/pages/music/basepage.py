@@ -1,11 +1,14 @@
 # coding=utf-8
-from src.initilization import browerdriver
+
 
 # 公共方法 在这里写
+from src.initilization import browerdriver
+
+
 class BasePageObject:
 
     def __init__(self):
-        self.driver = browerdriver.build_up_driver()
+        self.driver = browerdriver.BuildUpDriver.driver
 
     def extend_find_element(self,locator):
         element = self.driver.find_element(*locator)
