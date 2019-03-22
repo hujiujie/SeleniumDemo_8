@@ -1,8 +1,29 @@
 # coding=utf-8
+import logging
+import os
+import sys
+
 import pytest
 
 from src.initilization.browerdriver import BuildUpDriver
 
+#Add src root dirctory to PYTHONPATH by extend sys.path
+sys.path.append(os.path.dirname(sys.modules[__name__].__file__))
+
+fileHandler = logging.FileHandler(filename="../log/uiauto.log",encoding="utf-8")
+logging.getLogger().setLevel(0)
+formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s %(module)s:%(lineno)d %(message)s')
+fileHandler.setFormatter(formatter)
+
+logging.getLogger().addHandler(fileHandler)
+
+
 if __name__ == "__main__":
+    logging.info("Start to execute  automation cases")
+
     BuildUpDriver.build_up_driver()
-    pytest.main(['-s', 'testcases/login/test_login.py'])
+    # 执行测试用例
+    #pytest.main(['-s', 'testcases/login/test_login.py'])
+    pytest.main(['-s', 'testcases/book/test_book.py'])
+
+    logging.info("End to execute APP UI automaction cases")

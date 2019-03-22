@@ -6,11 +6,12 @@ from .basepage import BasePageObject
 
 class BooksPageObject(BasePageObject):
 
-    _to_book= (By.PARTIAL_LINK_TEXT, "豆瓣读书")
+    _to_book= (By.PARTIAL_LINK_TEXT, "读书")
     _search_text = (By.NAME, 'search_text')
     #_search_text = (By.XPATH ,"//*[@placeholder='书名、作者、ISBN']")
     _search_btn = (By.CLASS_NAME, "inp-btn")
-    _book_name = (By.PARTIAL_LINK_TEXT, "利用Python进行数据分析")
+    #_book_name = (By.PARTIAL_LINK_TEXT, "利用Python进行数据分析")
+    _book_name = (By.CLASS_NAME, 'title-text')
     _book_author = (By.XPATH, "//meta abstract[contains(.,'Wes McKinney')]")
 
     def __init__(self):
@@ -36,17 +37,24 @@ class BooksPageObject(BasePageObject):
         self.extend_find_element(BooksPageObject._search_text).send_keys(name)
         self.extend_find_element(BooksPageObject._search_btn).click()    
     '''
-    def search(self,name):
-        self.toBook()
+    def switch_windows(self):
         handles = self.driver.window_handles
-        self.driver.switch_to.window(handles[-1])
+        return self.driver.switch_to.window(handles[-1])
+
+
+    def search(self,name):
+        self.switch_windows()
+        self.toBook()
+        self.switch_windows()
         self.input_book_name(name)
         self.click_search_icon()
 
 
     def search_result_list(self):
-        book_name = self.extend_find_element(BooksPageObject._book_name).text
-        book_author = self.extend_find_element(BooksPageObject._book_author).text
-        print((book_author))
-        return book_name
+        elements = self.extend_find_element(BooksPageObject._book_name).text
+        print(elements)
+        #book_author = self.extend_find_element(BooksPageObject._book_author).text
+        #print((book_author))
+        return elements
+
 
