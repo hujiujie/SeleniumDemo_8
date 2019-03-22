@@ -1,6 +1,8 @@
 # coding=utf-8
-from .basepage import BasePageObject
+
 from selenium.webdriver.common.by import By
+
+from .basepage import BasePageObject
 
 
 class LoginPageObject(BasePageObject):
